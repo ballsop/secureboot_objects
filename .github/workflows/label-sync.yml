@@ -24,6 +24,14 @@ on:
 
 jobs:
   sync:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
 
-    uses: microsoft/mu_devops/.github/workflows/LabelSyncer.yml@131433bb4f29d68250154cc66096f04c19fe3ee9 # v18.0.7
-    secrets: inherit
+    steps:
+      - name: Sync Labels
+        uses: EndBug/label-sync@v2
+        with:
+          config-file: https://raw.githubusercontent.com/microsoft/mu_devops/main/.github/Labels.yml
+          delete-other-labels: false
+          token: ${{ github.token }}
