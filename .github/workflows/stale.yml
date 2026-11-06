@@ -24,6 +24,26 @@ on:
 
 jobs:
   check:
+    name: Stale
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
 
-    uses: microsoft/mu_devops/.github/workflows/Stale.yml@131433bb4f29d68250154cc66096f04c19fe3ee9 # v18.0.7
-    secrets: inherit
+    steps:
+      - name: Check for Stale Items
+        uses: actions/stale@1e223db275d687790206a7acac4d1a11bd6fe629 # v10
+        with:
+          days-before-issue-stale: 45
+          days-before-pr-stale: 60
+          days-before-issue-close: 7
+          days-before-pr-close: 7
+          stale-issue-message: This issue has been automatically marked as stale because it has not had activity in 45 days. It will be closed if no further activity occurs within 7 days. Thank you for your contributions.
+          stale-pr-message: This PR has been automatically marked as stale because it has not had activity in 60 days. It will be closed if no further activity occurs within 7 days. Thank you for your contributions.
+          close-issue-message: This issue has been automatically been closed because it did not have any activity in 45 days and no follow up within 7 days after being marked stale. Thank you for your contributions.
+          close-pr-message: This pull request has been automatically been closed because it did not have any activity in 60 days and no follow up within 7 days after being marked stale. Thank you for your contributions.
+          stale-issue-label: 'state:stale'
+          stale-pr-label: 'state:stale'
+          exempt-issue-labels: 'impact:security,state:backlog,state:under-discussion'
+          exempt-pr-labels: 'impact:security,state:backlog,state:under-discussion'
+          repo-token: ${{ github.token }}
